@@ -5,18 +5,20 @@ public final class Contrato {
     private int id;
     private int noContrato;
     private int annio;
-    private Cargos cargo;
+    private String horario;
+    private Cargos tipoCargo;
 
-    public Contrato(int id, int noContrato, int annio, Cargos cargo) {
+    public Contrato(int id) {
         this.id = id;
         this.noContrato = noContrato;
         this.annio = annio;
-        this.cargo = cargo;
+        this.tipoCargo = tipoCargo;
+        this.horario = horario;
     }
     public String getInfo() {
         String info = "ID del contrato: " + id + "\n";
         info += "Año del contrato: " + annio + "\n";
-        info += "Cargo: " + cargo + "\n";
+        info += "Cargo: " + tipoCargo + "\n";
         return info;
     }
     public int getId() {
@@ -44,12 +46,20 @@ public final class Contrato {
         this.annio = annio;
     }
 
-    public Cargos getCargo() {
-        return cargo;
+    public Cargos getTipoCargo() {
+        return tipoCargo;
     }
 
-    public void setCargo(Cargos cargo) {
-        this.cargo = cargo;
+    public void setTipoCargo(Cargos tipoCargo) {
+        this.tipoCargo = tipoCargo;
+    }
+
+    public void sethorario(String horario) {
+        this.horario  = horario;
+    }
+
+    public String getHorario() {
+        return horario;
     }
 }
 

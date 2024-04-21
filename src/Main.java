@@ -1,143 +1,170 @@
-import gestor.empresarial.contrato.Cargos;
 import gestor.empresarial.empresa.Empresa;
-import gestor.empresarial.empleados.Empleados;
-
+import gestor.empresarial.contrato.Cargos;
+import gestor.empresarial.datos.DatosEmpresariales;
 import java.util.Scanner;
 
 public class Main {
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Empresa empresa = inicializarEmpresa();
-        Empleados empleados = new Empleados();
+        Empresa empresa = new Empresa("Itera S.A. de C.V.", "RFC123456789", "221353424", "Victor Zacatzontle");
 
-        int opcion;
+        boolean continuar = true;
         do {
-            System.out.println("\n*** EMT-SYSTEM ***");
             System.out.println("1. Registrar solicitante");
             System.out.println("2. Registrar empleado");
-            System.out.println("3. Asignar contrato a un empleado");
-            System.out.println("4. Mostrar información de un empleado");
+            System.out.println("3. Asignar contrato");
+            System.out.println("4. Mostrar información de empleado");
             System.out.println("5. Mostrar información de la empresa");
-            System.out.println("6. Salir");
-            System.out.print("Ingrese su opción: ");
-            opcion = scanner.nextInt();
-            scanner.nextLine(); // Limpiar el buffer del scanner
+            System.out.println("6. Mostrar información de contratos");
+            System.out.println("7. Salir");
+            System.out.println("Seleccione una opción: ");
+
+            int opcion = scanner.nextInt();
+            scanner.nextLine(); // Consumir el salto de línea
 
             switch (opcion) {
                 case 1:
-                    registrarSolicitante(empleados, scanner);
+                    registrarSolicitante(empresa);
                     break;
                 case 2:
-                    registrarEmpleado(empleados, scanner);
+                    registrarEmpleado(empresa);
                     break;
                 case 3:
-                    asignarContrato(empleados, scanner);
+                    asignarContrato(empresa);
                     break;
                 case 4:
-                    mostrarInformacionEmpleado(empleados, scanner);
+                    mostrarInfoEmpleado(empresa);
                     break;
                 case 5:
-                    mostrarInformacionEmpresa(empresa);
+                    mostrarInfoEmpresa(empresa);
                     break;
                 case 6:
-                    System.out.println("Saliendo del sistema...");
+                    mostrarInfoContratos(empresa);
+                    break;
+                case 7:
+                    continuar = false;
                     break;
                 default:
-                    System.out.println("Opción no válida. Por favor, ingrese una opción válida.");
+                    System.out.println("Opción no válida.");
             }
-        } while (opcion != 6); // Cambiado de 7 a 6, ya que 6 es la opción para salir
+        } while (continuar);
     }
 
-    private static Empresa inicializarEmpresa() {
-        // Inicializar la empresa Itera México con los datos proporcionados
-        return new Empresa("Itera S.A. de C.V.", "RFC123456789", "221353424", "Victor Zacatzontle");
-    }
+    private static void registrarSolicitante(Empresa empresa) {
+        Scanner scanner = new Scanner(System.in);
 
-    private static void registrarSolicitante(Empleados empleados, Scanner scanner) {
-        System.out.println("\n*** Registro de solicitante ***");
-        System.out.print("Ingrese el ID del solicitante: ");
-        int id = scanner.nextInt();
-        scanner.nextLine(); // Limpiar el buffer del scanner
-        System.out.print("Ingrese el nombre del solicitante: ");
+        System.out.println("Ingrese el nombre del solicitante:");
         String nombre = scanner.nextLine();
-        System.out.print("Ingrese el apellido del solicitante: ");
-        String apellido = scanner.nextLine();
-        System.out.print("Ingrese el correo del solicitante: ");
+        System.out.println("Ingrese los apellidos del solicitante:");
+        String apellidos = scanner.nextLine();
+        System.out.println("Ingrese el correo del solicitante:");
         String correo = scanner.nextLine();
-        System.out.print("Ingrese el WhatsApp del solicitante: ");
+        System.out.println("Ingrese el número de WhatsApp del solicitante:");
         String whatsapp = scanner.nextLine();
 
-        // Agregar solicitante usando el método de Empleados
-        empleados.addDatosPersonales(nombre, apellido, correo, whatsapp);
-        System.out.println("Aspirante registrado exitosamente.");
+        int idGenerado = empresa.datosRH.addDatosPersonales(nombre, apellidos, correo, whatsapp);
+        if (idGenerado > 0) {
+            System.out.println("Solicitante registrado con ID: " + idGenerado);
+        } else {
+            System.out.println("Error al registrar el solicitante.");
+        }
     }
+    private static void registrarEmpleado(Empresa empresa) {
+        Scanner scanner = new Scanner(System.in);
 
-    private static void registrarEmpleado(Empleados empleados, Scanner scanner) {
-        System.out.println("\n*** Registro de empleado ***");
-        System.out.print("Ingrese el ID del empleado: ");
-        int id = scanner.nextInt();
-        scanner.nextLine(); // Limpiar el buffer del scanner
-        System.out.print("Ingrese la adscripción del empleado: ");
-        String adscripcion = scanner.nextLine();
-        System.out.print("Ingrese el teléfono de extensión del empleado: ");
-        String telefonoExtension = scanner.nextLine();
-        System.out.print("Ingrese el puesto del empleado: ");
-        String puesto = scanner.nextLine();
+        System.out.println("Ingrese el ID del solicitante:");
+        int idSolicitante = scanner.nextInt();
+        scanner.nextLine(); // Consumir el salto de línea
 
-        empleados.addEmpleado(id, adscripcion, telefonoExtension, puesto);
-        System.out.println("Empleado registrado exitosamente.");
+        DatosEmpresariales datosSolicitante = empresa.datosRH.getDatosPersonales(idSolicitante);
+        if (datosSolicitante != null) {
+            // Se muestra la información del solicitante
+            System.out.println("Información del solicitante:");
+            System.out.println("Nombre: " + datosSolicitante.getNombre());
+            System.out.println("Apellidos: " + datosSolicitante.getApellidos());
+            System.out.println("Correo: " + datosSolicitante.getCorreo());
+            System.out.println("WhatsApp: " + datosSolicitante.getWhatsApp());
+
+            // Solicitar los datos empresariales del empleado
+            System.out.println("Ingrese la adscripción del empleado:");
+            String adscripcion = scanner.nextLine();
+            System.out.println("Ingrese el teléfono exterior del empleado:");
+            String telefonoExterior = scanner.nextLine();
+            System.out.println("Ingrese el puesto del empleado:");
+            String puesto = scanner.nextLine();
+
+            // Agregar los datos empresariales al empleado
+            empresa.datosRH.addDatosEmpresariales(idSolicitante, adscripcion, telefonoExterior, puesto);
+            System.out.println("Empleado registrado con éxito.");
+        } else {
+            System.out.println("No se encontró ningún solicitante con el ID proporcionado.");
+        }
     }
-
-    private static void asignarContrato(Empleados empleados, Scanner scanner) {
-        System.out.println("\n*** Asignación de contrato ***");
-        System.out.print("Ingrese el ID del empleado: ");
+        private static void asignarContrato(Empresa empresa) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Ingrese el ID del empleado:");
         int id = scanner.nextInt();
-        System.out.print("Ingrese el año del contrato: ");
-        int anioContrato = scanner.nextInt();
-        scanner.nextLine(); // Limpiar el buffer del scanner
-        System.out.println("Seleccione el tipo de cargo:");
-        System.out.println("1. De confianza");
-        System.out.println("2. Sindicalizado");
-        System.out.println("3. Contrato temporal");
-        System.out.print("Ingrese su opción: ");
-        int opcionCargo = scanner.nextInt();
-        Cargos cargo = null;
-        switch (opcionCargo) {
+        scanner.nextLine(); // Consumir el salto de línea
+
+        System.out.println("Ingrese el número de contrato:");
+        int noContrato = scanner.nextInt();
+        System.out.println("Ingrese el año del contrato:");
+        int annio = scanner.nextInt();
+        scanner.nextLine(); // Consumir el salto de línea
+
+        System.out.println("Ingrese el horario del contrato:");
+        String horario = scanner.nextLine();
+
+        System.out.println("Ingrese el tipo de cargo:");
+        System.out.println("1. DE_CONFIANZA");
+        System.out.println("2. SINDICALIZADO");
+        System.out.println("3. TEMPORAL");
+        int opcion = scanner.nextInt();
+        Cargos tipoCargo;
+
+        switch (opcion) {
             case 1:
-                cargo = Cargos.DE_CONFIANZA;
+                tipoCargo = Cargos.DE_CONFIANZA;
                 break;
             case 2:
-                cargo = Cargos.SINDICALIZADO;
+                tipoCargo = Cargos.SINDICALIZADO;
                 break;
             case 3:
-                cargo = Cargos.TEMPORAL;
+                tipoCargo = Cargos.TEMPORAL;
                 break;
             default:
-                System.out.println("Opción no válida. Se asignará un cargo temporal por defecto.");
-                cargo = Cargos.TEMPORAL;
+                System.out.println("Opción no válida, se asignará cargo por defecto.");
+                tipoCargo = Cargos.TEMPORAL; // Cargo por defecto
+                break;
         }
 
-        // Agregar contrato usando el método de Empleados
-        empleados.addContrato(id, anioContrato, cargo);
-        System.out.println("Contrato asignado exitosamente.");
+        // Asigna el contrato al empleado en la empresa
+        empresa.datosRH.addContrato(id, noContrato, annio, horario, tipoCargo);
+        System.out.println("Contrato asignado con éxito.");
     }
 
-    private static void mostrarInformacionEmpleado(Empleados empleados, Scanner scanner) {
-        System.out.println("\n*** Mostrar información de un empleado ***");
-        System.out.print("Ingrese el ID del empleado: ");
+    private static void mostrarInfoEmpleado(Empresa empresa) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Ingrese el ID del empleado:");
         int id = scanner.nextInt();
-        scanner.nextLine(); // Limpiar el buffer del scanner
-        String infoEmpleado = empleados.getInfoEmpleado(id);
-        if (!infoEmpleado.isEmpty()) {
-            System.out.println(infoEmpleado);
-        } else {
-            System.out.println("Empleado no encontrado.");
-        }
+        scanner.nextLine(); // Consumir el salto de línea
+
+        // Muestra la información del empleado
+        empresa.datosRH.showDatosEmpleado(id);
     }
 
-    private static void mostrarInformacionEmpresa(Empresa empresa) {
-        System.out.println("\n*** Información de la empresa ***");
-        System.out.println(empresa.getInfo());
+    private static void mostrarInfoEmpresa(Empresa empresa) {
+        // Muestra la información de la empresa
+        empresa.datosRH.showEmpresa();
+    }
+
+    private static void mostrarInfoContratos(Empresa empresa) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Ingrese el ID del empleado:");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // Consumir el salto de línea
+
+        // Muestra la información de los contratos del empleado
+        empresa.datosRH.showContratosEmpleado(id);
     }
 }

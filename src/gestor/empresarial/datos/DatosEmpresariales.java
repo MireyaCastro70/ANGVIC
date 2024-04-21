@@ -11,6 +11,12 @@ public final class DatosEmpresariales extends DatosPersonales{ //esta clase no o
         super.setApellidos(apellidos);
         super.setCorreo(correo);
         super.setWhatsApp(whatsapp);
+
+    }
+
+    @Override
+    public int getId() {
+        return super.getId();
     }
 
     public String getAdscripcion() {
