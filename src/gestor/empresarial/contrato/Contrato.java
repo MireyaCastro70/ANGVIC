@@ -1,12 +1,13 @@
 package gestor.empresarial.contrato;
 
+
 public final class Contrato {
     private int id;
     private int noContrato;
     private int annio;
-    private gestor.empresarial.contrato.Cargos cargo;
+    private Cargos cargo;
 
-    public Contrato(int id, int noContrato, int annio, gestor.empresarial.contrato.Cargos cargo) {
+    public Contrato(int id, int noContrato, int annio, Cargos cargo) {
         this.id = id;
         this.noContrato = noContrato;
         this.annio = annio;
@@ -43,11 +44,11 @@ public final class Contrato {
         this.annio = annio;
     }
 
-    public gestor.empresarial.contrato.Cargos getCargo() {
+    public Cargos getCargo() {
         return cargo;
     }
 
-    public void setCargo(gestor.empresarial.contrato.Cargos cargo) {
+    public void setCargo(Cargos cargo) {
         this.cargo = cargo;
     }
 }

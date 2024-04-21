@@ -1,6 +1,6 @@
 package gestor.empresarial.datos;
 
-public class DatosPersonales { //Esta clase no ofrece instancia, solo puede ofrecer herencia
+public abstract class DatosPersonales { //Esta clase no ofrece instancia, solo puede ofrecer herencia
     private int id;
     private String nombre;
     private String apellidos;

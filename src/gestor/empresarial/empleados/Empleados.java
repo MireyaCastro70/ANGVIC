@@ -15,16 +15,6 @@ public final class Empleados implements iEmpleados { //esta clase no ofrece here
         contratosRH= new Contrato[100];
     }
 
-    /*private ArregloInformacion() {
-        this.i=0;
-        datosRH= new DatosEmpresariales[100];
-        contratosRH= new Contato[100];
-    }
-*/
-   /* public static ArregloInformacion creandoInstanciaPrivada8349(){
-        return new ArregloInformacion();
-    }*/
-
     public void addContrato(int id, int annio, Cargos cargo) {
         if (i < 100) {
             int index = findEmpleado(id);
@@ -196,6 +186,16 @@ public final class Empleados implements iEmpleados { //esta clase no ofrece here
             }
         } else {
             System.out.println("Ya no hay vacantes para empleados");
+        }
+    }
+    public String getInfoDatosPersonales(int id) {
+        int indice = findEmpleado(id);
+
+        if (indice < 0) {
+            System.out.println("Error al buscar por ID: Datos personales no encontrados");
+            return "";
+        } else {
+            return datosRH[indice].toString(); // Suponiendo que datosRH es un array de objetos tipo DatosEmpresariales
         }
     }
 }

@@ -9,10 +9,11 @@ public final class Empresa { //esta clase no ofrece herencia, solo instancia
 
     public Empleados datosRH;
 
-    public Empresa(String nombreEmpresa, String rfc) {
+    public Empresa(String nombreEmpresa, String rfc, String telefono,String representanteLegal) {
         this.nombreEmpresa=nombreEmpresa;
         this.rfc=rfc;
-
+        this.telefono= telefono;
+        this.representanteLegal = representanteLegal;
         datosRH= new Empleados();
 //        datosRH = ArregloInformacion.creandoInstanciaPrivada8349();
     }
