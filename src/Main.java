@@ -14,11 +14,11 @@ public class Main {
         int opcion;
         do {
             System.out.println("\n*** EMT-SYSTEM ***");
-            System.out.println("1. Registrar aspirante");
+            System.out.println("1. Registrar solicitante");
             System.out.println("2. Registrar empleado");
             System.out.println("3. Asignar contrato a un empleado");
             System.out.println("4. Mostrar información de un empleado");
-            System.out.println("5. Mostrar información de un aspirante");
+            System.out.println("5. Mostrar información de un solicitante");
             System.out.println("6. Mostrar información de la empresa");
             System.out.println("7. Salir");
             System.out.print("Ingrese su opción: ");
@@ -58,27 +58,27 @@ public class Main {
     }
 
     private static void registrarAspirante(Empleados empleados, Scanner scanner) {
-        System.out.println("\n*** Registro de aspirante ***");
-        System.out.print("Ingrese el ID del aspirante: ");
+        System.out.println("\n*** Registro de solicitante ***");
+        System.out.print("Ingrese el ID del solicitante: ");
         int id = scanner.nextInt();
         scanner.nextLine(); // Limpiar el buffer del scanner
-        System.out.print("Ingrese el nombre del aspirante: ");
+        System.out.print("Ingrese el nombre del solicitante: ");
         String nombre = scanner.nextLine();
-        System.out.print("Ingrese el apellido del aspirante: ");
+        System.out.print("Ingrese el apellido del solicitante: ");
         String apellido = scanner.nextLine();
-        System.out.print("Ingrese el correo del aspirante: ");
+        System.out.print("Ingrese el correo del solicitante: ");
         String correo = scanner.nextLine();
-        System.out.print("Ingrese el WhatsApp del aspirante: ");
+        System.out.print("Ingrese el WhatsApp del solicitante: ");
         String whatsapp = scanner.nextLine();
 
-        // Agregar aspirante usando el método de Empleados
+        // Agregar solicitante usando el método de Empleados
         empleados.addDatosPersonales(nombre, apellido, correo, whatsapp);
         System.out.println("Aspirante registrado exitosamente.");
     }
 
     private static void mostrarInformacionAspirante(Empleados empleados, Scanner scanner) {
-        System.out.println("\n*** Mostrar información de un aspirante ***");
-        System.out.print("Ingrese el ID del aspirante: ");
+        System.out.println("\n*** Mostrar información de un solicitante ***");
+        System.out.print("Ingrese el ID del solicitante: ");
         int id = scanner.nextInt();
         scanner.nextLine(); // Limpiar el buffer del scanner
         String infoAspirante = empleados.getInfoDatosPersonales(id);
