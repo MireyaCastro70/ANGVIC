@@ -37,28 +37,28 @@ public final class Empleados implements iEmpleados { //esta clase no ofrece here
     }
 
     private int findEmpleado(int id) {
-        int indiceI = -1;
+        int i = 0;
 
         for (int j = 0; j < this.i; j++) {
             if (datosRH[j].getId() == id) {
-                indiceI = j;
+                i = j;
                 break; // Salir del bucle una vez que se encuentre la coincidencia
             }
         }
 
-        return indiceI;
+        return i;
     }
 
     private int findEmpleado(String nombre){
-        int indiceI=-1;
+        int i=-1;
 
         for (int j=0; j < this.i ; j++){
             //System.out.println(datosRH[j].getId());
             if (datosRH[j].getNombre().equals(nombre))
-                indiceI=j;
+                i=j;
         }
 
-        return indiceI;
+        return i;
     }
 
     public void setWhatsApp(int id,String whats){
@@ -70,18 +70,18 @@ public final class Empleados implements iEmpleados { //esta clase no ofrece here
     }
 
     private String datosPersonales(int id){
-        int i = findEmpleado(id);
+        int index = findEmpleado(id);
 
-        if (i > -1){
+        if (index > -1){
             String datos = "";
-            datos += "Id: " + this.datosRH[i].getId() + "\n";
-            datos += "Nombre: " + this.datosRH[i].getNombre() + "\n";
-            datos += "Apellidos: " + this.datosRH[i].getApellidos() + "\n";
-            datos += "Correo: " + this.datosRH[i].getCorreo() + "\n";
-            datos += "WhatsApp: " + (this.datosRH[i].getWhatsApp()!=null ? this.datosRH[i].getWhatsApp() : "No registrado") + "\n";
-            datos += "Adscripción: " + (this.datosRH[i].getAdscripcion() != null ? this.datosRH[i].getAdscripcion() : "No Registrado") + "\n";
-            datos += "Puesto: " + (this.datosRH[i].getPuesto() != null ? this.datosRH[i].getPuesto() : "No Registrado") + "\n";
-            datos += "Tipo de Puesto: " + (this.contratosRH[i].getCargo() != null ? this.contratosRH[i].getCargo() : "No Registrado") + "\n";
+            datos += "Id: " + this.datosRH[index].getId() + "\n";
+            datos += "Nombre: " + this.datosRH[index].getNombre() + "\n";
+            datos += "Apellidos: " + this.datosRH[index].getApellidos() + "\n";
+            datos += "Correo: " + this.datosRH[index].getCorreo() + "\n";
+            datos += "WhatsApp: " + (this.datosRH[index].getWhatsApp()!=null ? this.datosRH[index].getWhatsApp() : "No registrado") + "\n";
+            datos += "Adscripción: " + (this.datosRH[index].getAdscripcion() != null ? this.datosRH[index].getAdscripcion() : "No Registrado") + "\n";
+            datos += "Puesto: " + (this.datosRH[index].getPuesto() != null ? this.datosRH[index].getPuesto() : "No Registrado") + "\n";
+            datos += "Tipo de Puesto: " + (this.contratosRH[index].getCargo() != null ? this.contratosRH[index].getCargo() : "No Registrado") + "\n";
             return datos;
         } else {
             System.out.println("Empleado con ID " + id + " no encontrado.");
@@ -89,15 +89,16 @@ public final class Empleados implements iEmpleados { //esta clase no ofrece here
         }
     }
 
-    public String getInfoEmpleado(int id) {
-        int i=findEmpleado(id);
 
-        if (i<0) {
+    public String getInfoEmpleado(int id) {
+        int index = findEmpleado(id);
+
+        if (index > -1) {
+            return datosPersonales(index); // Pasar el índice en lugar del ID
+        } else {
             System.out.println("Error al buscar por ID: Número de empleado no existente");
             return "";
         }
-        else
-            return datosPersonales(i);
     }
 
     public String getInfoEmpleado(String nombre) {
@@ -140,8 +141,8 @@ public final class Empleados implements iEmpleados { //esta clase no ofrece here
     }
 
     public void showContratosEmpleado(int id) {
-        int index = findEmpleado(id);
-        if (index > -1) {
+        int i = findEmpleado(id);
+        if (i > -1) {
             System.out.println("Contratos del empleado con ID " + id + ":");
             for (Contrato contrato : contratosRH) {
                 if (contrato != null && contrato.getId() == id) {
@@ -184,6 +185,7 @@ public final class Empleados implements iEmpleados { //esta clase no ofrece here
                 datosRH[index].setAdscripcion(adscripcion);
                 datosRH[index].setTelefonoExtension(telefonoExtension);
                 datosRH[index].setPuesto(puesto);
+                System.out.println("Empleado actualizado exitosamente.");
             } else {
                 // Si el empleado no existe, mostrar un mensaje de error
                 System.out.println("Empleado no encontrado.");

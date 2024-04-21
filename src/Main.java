@@ -22,6 +22,7 @@ public class Main {
             System.out.println("6. Salir");
             System.out.print("Ingrese su opción: ");
             opcion = scanner.nextInt();
+            scanner.nextLine(); // Limpiar el buffer del scanner
 
             switch (opcion) {
                 case 1:
@@ -36,7 +37,6 @@ public class Main {
                 case 4:
                     mostrarInformacionEmpleado(empleados, scanner);
                     break;
-
                 case 5:
                     mostrarInformacionEmpresa(empresa);
                     break;
@@ -46,7 +46,7 @@ public class Main {
                 default:
                     System.out.println("Opción no válida. Por favor, ingrese una opción válida.");
             }
-        } while (opcion != 7);
+        } while (opcion != 6); // Cambiado de 7 a 6, ya que 6 es la opción para salir
     }
 
     private static Empresa inicializarEmpresa() {
@@ -72,7 +72,6 @@ public class Main {
         empleados.addDatosPersonales(nombre, apellido, correo, whatsapp);
         System.out.println("Aspirante registrado exitosamente.");
     }
-
 
     private static void registrarEmpleado(Empleados empleados, Scanner scanner) {
         System.out.println("\n*** Registro de empleado ***");
