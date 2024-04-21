@@ -18,15 +18,14 @@ public class Main {
             System.out.println("2. Registrar empleado");
             System.out.println("3. Asignar contrato a un empleado");
             System.out.println("4. Mostrar información de un empleado");
-            System.out.println("5. Mostrar información de un solicitante");
-            System.out.println("6. Mostrar información de la empresa");
-            System.out.println("7. Salir");
+            System.out.println("5. Mostrar información de la empresa");
+            System.out.println("6. Salir");
             System.out.print("Ingrese su opción: ");
             opcion = scanner.nextInt();
 
             switch (opcion) {
                 case 1:
-                    registrarAspirante(empleados, scanner);
+                    registrarSolicitante(empleados, scanner);
                     break;
                 case 2:
                     registrarEmpleado(empleados, scanner);
@@ -37,13 +36,11 @@ public class Main {
                 case 4:
                     mostrarInformacionEmpleado(empleados, scanner);
                     break;
+
                 case 5:
-                    mostrarInformacionAspirante(empleados, scanner);
-                    break;
-                case 6:
                     mostrarInformacionEmpresa(empresa);
                     break;
-                case 7:
+                case 6:
                     System.out.println("Saliendo del sistema...");
                     break;
                 default:
@@ -57,7 +54,7 @@ public class Main {
         return new Empresa("Itera S.A. de C.V.", "RFC123456789", "221353424", "Victor Zacatzontle");
     }
 
-    private static void registrarAspirante(Empleados empleados, Scanner scanner) {
+    private static void registrarSolicitante(Empleados empleados, Scanner scanner) {
         System.out.println("\n*** Registro de solicitante ***");
         System.out.print("Ingrese el ID del solicitante: ");
         int id = scanner.nextInt();
@@ -76,18 +73,6 @@ public class Main {
         System.out.println("Aspirante registrado exitosamente.");
     }
 
-    private static void mostrarInformacionAspirante(Empleados empleados, Scanner scanner) {
-        System.out.println("\n*** Mostrar información de un solicitante ***");
-        System.out.print("Ingrese el ID del solicitante: ");
-        int id = scanner.nextInt();
-        scanner.nextLine(); // Limpiar el buffer del scanner
-        String infoAspirante = empleados.getInfoDatosPersonales(id);
-        if (!infoAspirante.isEmpty()) {
-            System.out.println(infoAspirante);
-        } else {
-            System.out.println("Aspirante no encontrado.");
-        }
-    }
 
     private static void registrarEmpleado(Empleados empleados, Scanner scanner) {
         System.out.println("\n*** Registro de empleado ***");

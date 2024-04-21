@@ -69,10 +69,11 @@ public final class Empleados implements iEmpleados { //esta clase no ofrece here
         System.out.println("Error al asignar WhatsApp: Número de empleado no existente");
     }
 
-    private String datosPersonales(int i){
-        String datos="";
+    private String datosPersonales(int id){
+        int i = findEmpleado(id);
 
         if (i > -1){
+            String datos = "";
             datos += "Id: " + this.datosRH[i].getId() + "\n";
             datos += "Nombre: " + this.datosRH[i].getNombre() + "\n";
             datos += "Apellidos: " + this.datosRH[i].getApellidos() + "\n";
@@ -80,9 +81,12 @@ public final class Empleados implements iEmpleados { //esta clase no ofrece here
             datos += "WhatsApp: " + (this.datosRH[i].getWhatsApp()!=null ? this.datosRH[i].getWhatsApp() : "No registrado") + "\n";
             datos += "Adscripción: " + (this.datosRH[i].getAdscripcion() != null ? this.datosRH[i].getAdscripcion() : "No Registrado") + "\n";
             datos += "Puesto: " + (this.datosRH[i].getPuesto() != null ? this.datosRH[i].getPuesto() : "No Registrado") + "\n";
-            datos += "  Tipo de Puesto: " + (this.contratosRH[0].getCargo() != null ? this.contratosRH[0].getCargo() : "No Registrado") + "\n";
+            datos += "Tipo de Puesto: " + (this.contratosRH[i].getCargo() != null ? this.contratosRH[i].getCargo() : "No Registrado") + "\n";
+            return datos;
+        } else {
+            System.out.println("Empleado con ID " + id + " no encontrado.");
+            return "";
         }
-        return datos;
     }
 
     public String getInfoEmpleado(int id) {
@@ -186,16 +190,6 @@ public final class Empleados implements iEmpleados { //esta clase no ofrece here
             }
         } else {
             System.out.println("Ya no hay vacantes para empleados");
-        }
-    }
-    public String getInfoDatosPersonales(int id) {
-        int indice = findEmpleado(id);
-
-        if (indice < 0) {
-            System.out.println("Error al buscar por ID: Datos personales no encontrados");
-            return "";
-        } else {
-            return datosRH[indice].toString(); // Suponiendo que datosRH es un array de objetos tipo DatosEmpresariales
         }
     }
 }
